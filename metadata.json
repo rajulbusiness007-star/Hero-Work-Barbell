@@ -1,0 +1,6 @@
+{
+  "name": "Ironwork Barbell – 24/7 Powerlifting & Performance Gym",
+  "description": "Austin's 24/7 powerlifting, strength conditioning, and recovery gym. Claim your free pass, browse class schedules, and train with elite coaches.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
