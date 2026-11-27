@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   Award,
   CalendarCheck2,
@@ -63,27 +63,6 @@ function BadgeEmblem({
   );
 }
 
-const gridVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.06,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  },
-};
-
 export function MemberMilestonesSection() {
   const [filter, setFilter] = useState<BadgeFilter>('all');
   const [unlockedIds, setUnlockedIds] = useState<string[]>(() =>
@@ -118,7 +97,7 @@ export function MemberMilestonesSection() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-12"
         >
@@ -189,31 +168,36 @@ export function MemberMilestonesSection() {
           </div>
         ) : (
           <motion.div
-            variants={gridVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
           >
-            {visibleBadges.map((badge) => {
-              const isUnlocked = unlockedIds.includes(badge.id);
-              const displayedProgress = isUnlocked
-                ? badge.targetProgress
-                : Math.min(badge.currentProgress, badge.targetProgress - 1);
-              const percent = Math.round(
-                (displayedProgress / badge.targetProgress) * 100
-              );
+            <AnimatePresence mode="popLayout" initial={false}>
+              {visibleBadges.map((badge) => {
+                const isUnlocked = unlockedIds.includes(badge.id);
+                const displayedProgress = isUnlocked
+                  ? badge.targetProgress
+                  : Math.min(badge.currentProgress, badge.targetProgress - 1);
+                const percent = Math.round(
+                  (displayedProgress / badge.targetProgress) * 100
+                );
 
-              return (
-                <motion.article
-                  key={badge.id}
-                  variants={cardVariants}
-                  className={`p-6 rounded-xl border flex flex-col justify-between gap-5 transition-colors duration-150 will-change-transform ${
-                    isUnlocked
-                      ? 'bg-[#14151A] border-[#C8FF00]/60'
-                      : 'bg-[#121216] border-zinc-800 hover:border-zinc-700'
-                  }`}
-                >
+                return (
+                  <motion.article
+                    key={badge.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    className={`p-6 rounded-xl border flex flex-col justify-between gap-5 transition-colors duration-150 will-change-transform ${
+                      isUnlocked
+                        ? 'bg-[#14151A] border-[#C8FF00]/60'
+                        : 'bg-[#121216] border-zinc-800 hover:border-zinc-700'
+                    }`}
+                  >
                   <div>
                     {/* Top row: emblem + metadata + explicit status */}
                     <div className="flex items-start justify-between gap-4 mb-4">
@@ -290,9 +274,10 @@ export function MemberMilestonesSection() {
                       {isUnlocked ? 'Reset Badge Preview' : 'Simulate Badge Unlock'}
                     </button>
                   </div>
-                </motion.article>
-              );
-            })}
+                  </motion.article>
+                );
+              })}
+            </AnimatePresence>
           </motion.div>
         )}
       </div>

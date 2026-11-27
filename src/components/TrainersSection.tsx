@@ -29,7 +29,7 @@ export function TrainersSection() {
               key={trainer.id}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{
                 duration: 0.35,
                 delay: index * 0.08,
@@ -41,6 +41,8 @@ export function TrainersSection() {
                 <ResilientImage
                   src={trainer.image}
                   alt={trainer.imageAlt}
+                  width={1024}
+                  height={1024}
                   fallbackLabel={trainer.name}
                   className="w-full h-full rounded-full object-cover ring-2 ring-zinc-800 group-hover:ring-[#C8FF00] transition-all duration-200"
                 />

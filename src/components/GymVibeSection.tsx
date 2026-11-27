@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   Check,
   Copy,
@@ -41,7 +41,7 @@ export function GymVibeSection() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-12"
         >
@@ -94,7 +94,7 @@ export function GymVibeSection() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch will-change-transform"
         >
@@ -196,81 +196,97 @@ export function GymVibeSection() {
               </div>
             </div>
 
-            {viewMode === 'spotify' ? (
-              <div className="flex-1 flex flex-col justify-between gap-4">
-                <div className="w-full rounded-xl overflow-hidden border border-zinc-800 bg-[#09090B]">
-                  <iframe
-                    key={activeMix.spotifyPlaylistId}
-                    title={`Spotify player for ${activeMix.name}`}
-                    src={`https://open.spotify.com/embed/playlist/${activeMix.spotifyPlaylistId}?utm_source=generator&theme=0`}
-                    width="100%"
-                    height="352"
-                    loading="lazy"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    className="w-full block border-0"
-                  />
-                </div>
-                <p className="text-xs text-zinc-500 flex flex-wrap items-center justify-between gap-2">
-                  <span>
-                    Prefer the native mobile app? Tap &ldquo;Open in Spotify&rdquo; above
-                    to save this rotation offline.
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('tracklist')}
-                    className="text-zinc-300 hover:text-[#C8FF00] underline underline-offset-4 cursor-pointer"
-                  >
-                    View floor tracklist
-                  </button>
-                </p>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col justify-between gap-4">
-                <ul className="divide-y divide-zinc-800/80 border border-zinc-800 rounded-xl bg-[#09090B] px-4">
-                  {activeMix.tracks.map((track, idx) => (
-                    <li
-                      key={track.title}
-                      className="py-3.5 flex items-center justify-between gap-4"
+            <AnimatePresence mode="wait" initial={false}>
+              {viewMode === 'spotify' ? (
+                <motion.div
+                  key={`spotify-${activeMix.id}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex-1 flex flex-col justify-between gap-4"
+                >
+                  <div className="w-full rounded-xl overflow-hidden border border-zinc-800 bg-[#09090B]">
+                    <iframe
+                      key={activeMix.spotifyPlaylistId}
+                      title={`Spotify player for ${activeMix.name}`}
+                      src={`https://open.spotify.com/embed/playlist/${activeMix.spotifyPlaylistId}?utm_source=generator&theme=0`}
+                      width="100%"
+                      height="352"
+                      loading="lazy"
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                      className="w-full block border-0"
+                    />
+                  </div>
+                  <p className="text-xs text-zinc-500 flex flex-wrap items-center justify-between gap-2">
+                    <span>
+                      Prefer the native mobile app? Tap &ldquo;Open in Spotify&rdquo; above
+                      to save this rotation offline.
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setViewMode('tracklist')}
+                      className="text-zinc-300 hover:text-[#C8FF00] underline underline-offset-4 cursor-pointer"
                     >
-                      <div className="flex items-center gap-3.5 min-w-0">
-                        <span className="font-mono text-xs text-zinc-500 tabular-nums w-5 shrink-0">
-                          {String(idx + 1).padStart(2, '0')}
-                        </span>
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold text-white truncate">
-                            {track.title}
-                          </p>
-                          <p className="text-xs text-zinc-400 truncate">
-                            {track.artist}
-                          </p>
+                      View floor tracklist
+                    </button>
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={`tracklist-${activeMix.id}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex-1 flex flex-col justify-between gap-4"
+                >
+                  <ul className="divide-y divide-zinc-800/80 border border-zinc-800 rounded-xl bg-[#09090B] px-4">
+                    {activeMix.tracks.map((track, idx) => (
+                      <li
+                        key={track.title}
+                        className="py-3.5 flex items-center justify-between gap-4"
+                      >
+                        <div className="flex items-center gap-3.5 min-w-0">
+                          <span className="font-mono text-xs text-zinc-500 tabular-nums w-5 shrink-0">
+                            {String(idx + 1).padStart(2, '0')}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-white truncate">
+                              {track.title}
+                            </p>
+                            <p className="text-xs text-zinc-400 truncate">
+                              {track.artist}
+                            </p>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="text-right font-mono text-xs text-zinc-400 tabular-nums shrink-0">
-                        <span className="text-[#C8FF00]">{track.bpm} BPM</span>
-                        <span aria-hidden="true" className="mx-2 text-zinc-700">
-                          ·
-                        </span>
-                        <span>{track.duration}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                        <div className="text-right font-mono text-xs text-zinc-400 tabular-nums shrink-0">
+                          <span className="text-[#C8FF00]">{track.bpm} BPM</span>
+                          <span aria-hidden="true" className="mx-2 text-zinc-700">
+                            ·
+                          </span>
+                          <span>{track.duration}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
 
-                <div className="flex items-center justify-between text-xs text-zinc-400">
-                  <span>Updated weekly by South Congress floor coaches</span>
-                  <a
-                    href={activeMix.spotifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#C8FF00] hover:underline inline-flex items-center gap-1 font-medium"
-                  >
-                    <span>Stream full mix</span>
-                    <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-                  </a>
-                </div>
-              </div>
-            )}
+                  <div className="flex items-center justify-between text-xs text-zinc-400">
+                    <span>Updated weekly by South Congress floor coaches</span>
+                    <a
+                      href={activeMix.spotifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#C8FF00] hover:underline inline-flex items-center gap-1 font-medium"
+                    >
+                      <span>Stream full mix</span>
+                      <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>

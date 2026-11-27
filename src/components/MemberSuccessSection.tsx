@@ -37,7 +37,7 @@ export function MemberSuccessSection() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 sm:mb-12"
         >
@@ -81,7 +81,7 @@ export function MemberSuccessSection() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="bg-[#121216] border border-zinc-800 rounded-2xl p-6 sm:p-8 lg:p-10 overflow-hidden will-change-transform"
         >
@@ -109,6 +109,9 @@ export function MemberSuccessSection() {
                   <ResilientImage
                     src={activeMember.image}
                     alt={activeMember.imageAlt}
+                    eager={true}
+                    width={1024}
+                    height={1024}
                     fallbackLabel={activeMember.name}
                     className="w-full h-full object-cover"
                   />
@@ -161,7 +164,7 @@ export function MemberSuccessSection() {
           aria-label="Select member story"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5 will-change-transform"
         >

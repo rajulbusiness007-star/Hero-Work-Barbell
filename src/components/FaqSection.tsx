@@ -26,7 +26,7 @@ export function FaqSection({ onBookTrial }: FaqSectionProps) {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 lg:sticky lg:top-24"
           >
@@ -57,7 +57,7 @@ export function FaqSection({ onBookTrial }: FaqSectionProps) {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0.05 }}
             transition={{ duration: 0.45, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-3"
           >
@@ -116,10 +116,11 @@ export function FaqSection({ onBookTrial }: FaqSectionProps) {
                         id={panelId}
                         role="region"
                         aria-labelledby={triggerId}
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
-                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
                       >
                         <div className="px-5 sm:px-6 pb-5 pt-1 text-sm sm:text-base text-zinc-300 leading-relaxed border-t border-zinc-800/70">
                           {item.answer}

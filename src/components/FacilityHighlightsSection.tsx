@@ -69,7 +69,7 @@ export function FacilityHighlightsSection() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-2xl mb-10 sm:mb-12"
         >
@@ -89,7 +89,7 @@ export function FacilityHighlightsSection() {
           variants={gridVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.12 }}
+          viewport={{ once: true, amount: 0.05 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6"
         >
           {FACILITY_HIGHLIGHTS.map((item, index) => (
@@ -105,6 +105,8 @@ export function FacilityHighlightsSection() {
                 <ResilientImage
                   src={item.image}
                   alt={item.imageAlt}
+                  width={1200}
+                  height={896}
                   fallbackLabel={item.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 />

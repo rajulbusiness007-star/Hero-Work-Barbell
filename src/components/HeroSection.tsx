@@ -28,8 +28,8 @@ export function HeroSection({ onClaimPass }: HeroSectionProps) {
             alt={HERO_MEDIA.alt}
             eager={true}
             fetchPriority="high"
-            width={1280}
-            height={720}
+            width={1376}
+            height={768}
             fallbackLabel={GYM_INFO.fullName}
             className="w-full h-full object-cover object-[center_18%] sm:object-center"
           />
