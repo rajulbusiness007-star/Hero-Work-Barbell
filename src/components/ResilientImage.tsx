@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Dumbbell } from 'lucide-react';
 
 interface ResilientImageProps {
@@ -23,6 +23,22 @@ export function ResilientImage({
   height,
 }: ResilientImageProps) {
   const [hasError, setHasError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(eager);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    setHasError(false);
+    if (eager) {
+      setIsLoaded(true);
+      return;
+    }
+    const el = imgRef.current;
+    if (el && el.complete && el.naturalWidth > 0) {
+      setIsLoaded(true);
+    } else {
+      setIsLoaded(false);
+    }
+  }, [src, eager]);
 
   if (hasError) {
     return (
@@ -43,6 +59,7 @@ export function ResilientImage({
 
   return (
     <img
+      ref={imgRef}
       src={src}
       alt={alt}
       width={width}
@@ -51,8 +68,11 @@ export function ResilientImage({
       fetchPriority={fetchPriority}
       decoding={eager ? 'sync' : 'async'}
       referrerPolicy="no-referrer"
+      data-loaded={isLoaded ? 'true' : 'false'}
+      data-animate={eager ? 'false' : 'true'}
+      onLoad={() => setIsLoaded(true)}
       onError={() => setHasError(true)}
-      className={className}
+      className={`resilient-img ${className}`}
     />
   );
 }

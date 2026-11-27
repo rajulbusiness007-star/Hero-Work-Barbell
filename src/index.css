@@ -13,6 +13,7 @@
 :root {
   color-scheme: dark;
   accent-color: #C8FF00;
+  interpolate-size: allow-keywords;
   --color-obsidian: #09090B;
   --color-obsidian-alt: #0D0D10;
   --color-charcoal: #121216;
@@ -62,7 +63,8 @@
     background-color: var(--color-obsidian);
     color: var(--color-text-primary);
     font-family: var(--font-sans);
-    overflow-x: hidden;
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   /* Optical compensation for light text on dark backgrounds */
@@ -98,6 +100,29 @@
 @media (prefers-reduced-motion: no-preference) {
   .beacon-dot {
     animation: beacon-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes image-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.resilient-img[data-loaded='false'] {
+  opacity: 0;
+}
+
+.resilient-img[data-loaded='true'] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .resilient-img[data-animate='true'][data-loaded='true'] {
+    animation: image-fade-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
