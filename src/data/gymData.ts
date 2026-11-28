@@ -113,7 +113,7 @@ export interface FacilityHighlight {
 }
 
 export const HERO_MEDIA = {
-  image: '/src/assets/images/hero_beast_power_clean.avif',
+  image: '/images/hero_beast_power_clean.jpg',
   alt: 'Muscular athlete gripping a loaded steel barbell under dramatic ember rim lighting inside Ironwork Barbell in Austin, Texas',
   manifesto: "If it's not heavy, it's not changing you.",
   metrics: [
@@ -173,7 +173,7 @@ export const CLASS_SESSIONS: GymClassSession[] = [
     intensityLabel: 'Max Effort · 9/10',
     intensityLevel: 3,
     spotsLeft: 4,
-    image: '/src/assets/images/class_powerlifting_1795573052215.avif',
+    image: '/images/class_powerlifting_1795573052215.jpg',
     imageAlt: 'Lifters squatting with calibrated plates on steel racks',
   },
   {
@@ -186,7 +186,7 @@ export const CLASS_SESSIONS: GymClassSession[] = [
     intensityLabel: 'High Output · 8/10',
     intensityLevel: 3,
     spotsLeft: 6,
-    image: '/src/assets/images/class_conditioning_1795573053565.avif',
+    image: '/images/class_conditioning_1795573053565.jpg',
     imageAlt: 'Athlete pushing a heavy weighted prowler sled across black gym turf',
   },
   {
@@ -199,7 +199,7 @@ export const CLASS_SESSIONS: GymClassSession[] = [
     intensityLabel: 'Technical · 7/10',
     intensityLevel: 2,
     spotsLeft: 5,
-    image: '/src/assets/images/class_powerlifting_1795573052215.avif',
+    image: '/images/class_powerlifting_1795573052215.jpg',
     imageAlt: 'Barbell technique and squat mechanics training session',
   },
   {
@@ -212,7 +212,7 @@ export const CLASS_SESSIONS: GymClassSession[] = [
     intensityLabel: 'Restorative · 4/10',
     intensityLevel: 1,
     spotsLeft: 3,
-    image: '/src/assets/images/class_recovery_1795573053940.avif',
+    image: '/images/class_recovery_1795573053940.jpg',
     imageAlt: 'Cedar infrared sauna and black cold plunge recovery suite',
   },
   {
@@ -225,7 +225,7 @@ export const CLASS_SESSIONS: GymClassSession[] = [
     intensityLabel: 'High Output · 9/10',
     intensityLevel: 3,
     spotsLeft: 7,
-    image: '/src/assets/images/class_conditioning_1795573053565.avif',
+    image: '/images/class_conditioning_1795573053565.jpg',
     imageAlt: 'Evening sled sprint and loaded carry conditioning session',
   },
 ];
@@ -240,7 +240,7 @@ export const TRAINER_PROFILES: TrainerProfile[] = [
     bio: 'Former 93kg national podium lifter specializing in conjugate strength cycles and raw squat mechanics.',
     instagramHandle: '@marcusvance.lifts',
     instagramUrl: 'https://instagram.com',
-    image: '/src/assets/images/trainer_marcus_1795573054313.avif',
+    image: '/images/trainer_marcus_1795573054313.jpg',
     imageAlt: 'Portrait of Head Strength Coach Marcus Vance in the squat rack bay',
   },
   {
@@ -252,7 +252,7 @@ export const TRAINER_PROFILES: TrainerProfile[] = [
     bio: 'Builds relentless work capacity through heavy sled work, threshold erg intervals, and anaerobic pacing.',
     instagramHandle: '@elenarostova.fit',
     instagramUrl: 'https://instagram.com',
-    image: '/src/assets/images/trainer_elena_1795573054396.avif',
+    image: '/images/trainer_elena_1795573054396.jpg',
     imageAlt: 'Portrait of Conditioning Director Elena Rostova in the training hall',
   },
   {
@@ -264,7 +264,7 @@ export const TRAINER_PROFILES: TrainerProfile[] = [
     bio: 'Pairs explosive barbell speed with end-range thoracic and hip resilience so lifters stay healthy under heavy loads.',
     instagramHandle: '@devonhale.barbell',
     instagramUrl: 'https://instagram.com',
-    image: '/src/assets/images/trainer_devon_1795573054904.avif',
+    image: '/images/trainer_devon_1795573054904.jpg',
     imageAlt: 'Portrait of Olympic Weightlifting and Mobility Coach Devon Hale',
   },
 ];
@@ -338,7 +338,7 @@ export const MEMBER_TESTIMONIALS: MemberTestimonial[] = [
     milestoneMetric: '+245 lb Meet Total (1,110 → 1,355 lbs)',
     timeframe: '11 Months',
     coachWorkedWith: 'Marcus Vance',
-    image: '/src/assets/images/member_carlos_1795573567583.avif',
+    image: '/images/member_carlos_1795573567583.jpg',
     imageAlt: 'Carlos Mendez wrapping his wrists before a heavy barbell bench session at Ironwork Barbell',
   },
   {
@@ -351,7 +351,7 @@ export const MEMBER_TESTIMONIALS: MemberTestimonial[] = [
     milestoneMetric: '375 lb Deadlift · 1st Place State Open',
     timeframe: '14 Months',
     coachWorkedWith: 'Elena Rostova',
-    image: '/src/assets/images/member_maya_1795573559046.avif',
+    image: '/images/member_maya_1795573559046.jpg',
     imageAlt: 'Maya Robinson smiling beside a loaded squat rack after training at Ironwork Barbell',
   },
   {
@@ -364,7 +364,7 @@ export const MEMBER_TESTIMONIALS: MemberTestimonial[] = [
     milestoneMetric: '545 lb Deadlift · Zero Back Pain',
     timeframe: '9 Months',
     coachWorkedWith: 'Devon Hale',
-    image: '/src/assets/images/member_tariq_1795573560038.avif',
+    image: '/images/member_tariq_1795573560038.jpg',
     imageAlt: 'Tariq Al-Mansoor wearing a leather lifting belt beside a steel power rack',
   },
   {
@@ -377,7 +377,7 @@ export const MEMBER_TESTIMONIALS: MemberTestimonial[] = [
     milestoneMetric: '9/9 Meet Lifts · 780 lb Total',
     timeframe: '6 Months',
     coachWorkedWith: 'Marcus Vance',
-    image: '/src/assets/images/member_hannah_1795573558586.avif',
+    image: '/images/member_hannah_1795573558586.jpg',
     imageAlt: 'Hannah Callahan standing in front of calibrated barbell racks after her lifting session',
   },
 ];
@@ -575,7 +575,7 @@ export const FACILITY_HIGHLIGHTS: FacilityHighlight[] = [
     spec: '42 Eleiko & Rogue Racks · 12 Oak Platforms',
     description:
       'IPF-spec competition racks, Texas Power Bars, Kabuki specialty bars, and calibrated kilo and pound steel plate trees stocked at every station.',
-    image: '/src/assets/images/facility_equipment_1795581050637.avif',
+    image: '/images/facility_equipment_1795581050637.jpg',
     imageAlt:
       'Row of calibrated Eleiko and Rogue powerlifting racks with competition steel plates and oak deadlift platforms',
   },
@@ -587,7 +587,7 @@ export const FACILITY_HIGHLIGHTS: FacilityHighlight[] = [
     spec: '40-Meter Shock Turf · Prowlers & Ergs',
     description:
       'Dedicated indoor sprint turf lined with weighted prowler sleds, competition kettlebells, sandbags, and Concept2 / Rogue Echo ergs.',
-    image: '/src/assets/images/facility_turf_1795581050447.avif',
+    image: '/images/facility_turf_1795581050447.jpg',
     imageAlt:
       '40-meter black athletic conditioning turf lane with weighted sleds, kettlebells, and assault bikes',
   },
@@ -599,7 +599,7 @@ export const FACILITY_HIGHLIGHTS: FacilityHighlight[] = [
     spec: 'Full-Spectrum Heat · Western Red Cedar',
     description:
       'Walk-in glass-front cedar sauna built to drop cortisol, clear soreness after heavy deadlift blocks, and accelerate cardiovascular conditioning.',
-    image: '/src/assets/images/facility_sauna_1795581051236.avif',
+    image: '/images/facility_sauna_1795581051236.jpg',
     imageAlt:
       'Custom western red cedar infrared sauna with warm amber bench lighting inside the recovery suite',
   },
@@ -611,7 +611,7 @@ export const FACILITY_HIGHLIGHTS: FacilityHighlight[] = [
     spec: 'Continuous Ozone Filtration · Basalt Suite',
     description:
       'Twin stainless-steel plunge basins held steady at 39°F with commercial UV and ozone sanitation for clean, rapid post-session inflammation control.',
-    image: '/src/assets/images/facility_cold_plunge_1795581051504.avif',
+    image: '/images/facility_cold_plunge_1795581051504.jpg',
     imageAlt:
       'Dual matte black cold plunge tubs filled with chilled water on dark stone tile',
   },
