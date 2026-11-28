@@ -16,26 +16,51 @@ const __dirname = path.dirname(__filename);
 function syncAndServeImageAssets(): Plugin {
   const srcImagesDir = path.resolve(__dirname, 'src/assets/images');
   const b64Dir = path.resolve(__dirname, 'src/assets/images-data');
+  const mimeByExt: Record<string, string> = {
+    '.avif': 'image/avif',
+    '.webp': 'image/webp',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+  };
+
+  function collectManifestGroups(): Map<string, string[]> {
+    const groups = new Map<string, string[]>();
+    if (!fs.existsSync(b64Dir)) return groups;
+    for (const entry of fs.readdirSync(b64Dir)) {
+      const partMatch = entry.match(/^(.+)\.b64(?:\.(p\d+))?$/);
+      if (!partMatch) continue;
+      const outName = partMatch[1];
+      const list = groups.get(outName) || [];
+      list.push(entry);
+      groups.set(outName, list);
+    }
+    for (const [outName, entries] of groups.entries()) {
+      entries.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+      groups.set(outName, entries);
+    }
+    return groups;
+  }
 
   function decodeB64Image(filename: string): Buffer | null {
-    const b64Path = path.join(b64Dir, `${filename}.b64`);
-    if (!fs.existsSync(b64Path)) return null;
-    const raw = fs.readFileSync(b64Path, 'utf8').trim();
+    const groups = collectManifestGroups();
+    const entries = groups.get(filename);
+    if (!entries || entries.length === 0) return null;
+    const raw = entries
+      .map((entry) => fs.readFileSync(path.join(b64Dir, entry), 'utf8').replace(/\s+/g, ''))
+      .join('');
     return Buffer.from(raw, 'base64');
   }
 
   function materializeFromManifests(): void {
-    if (!fs.existsSync(b64Dir)) return;
+    const groups = collectManifestGroups();
+    if (groups.size === 0) return;
     fs.mkdirSync(srcImagesDir, { recursive: true });
-    for (const entry of fs.readdirSync(b64Dir)) {
-      if (!entry.endsWith('.b64')) continue;
-      const outName = entry.slice(0, -4);
+    for (const outName of groups.keys()) {
       const outPath = path.join(srcImagesDir, outName);
-      if (!fs.existsSync(outPath)) {
-        const buf = decodeB64Image(outName);
-        if (buf) {
-          fs.writeFileSync(outPath, buf);
-        }
+      const buf = decodeB64Image(outName);
+      if (buf && (!fs.existsSync(outPath) || !fs.readFileSync(outPath).equals(buf))) {
+        fs.writeFileSync(outPath, buf);
       }
     }
   }
@@ -52,15 +77,17 @@ function syncAndServeImageAssets(): Plugin {
         if (!cleanUrl || cleanUrl.includes('..')) {
           return next();
         }
+        const ext = path.extname(cleanUrl).toLowerCase();
+        const contentType = mimeByExt[ext] || 'application/octet-stream';
         const diskPath = path.join(srcImagesDir, cleanUrl);
         if (fs.existsSync(diskPath) && fs.statSync(diskPath).isFile()) {
-          res.setHeader('Content-Type', 'image/jpeg');
+          res.setHeader('Content-Type', contentType);
           fs.createReadStream(diskPath).pipe(res);
           return;
         }
         const buf = decodeB64Image(cleanUrl);
         if (buf) {
-          res.setHeader('Content-Type', 'image/jpeg');
+          res.setHeader('Content-Type', contentType);
           res.end(buf);
           return;
         }
