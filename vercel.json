@@ -9,7 +9,7 @@
       "destination": "/api/index.ts"
     },
     {
-      "source": "/((?!api/|src/assets/|assets/).*)",
+      "source": "/((?!api/|src/assets/|assets/|images/).*)",
       "destination": "/index.html"
     }
   ]

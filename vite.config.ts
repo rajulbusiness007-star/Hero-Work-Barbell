@@ -9,12 +9,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Ensures image assets in src/assets/images/ (and lossless base64 manifests in
- * src/assets/images-data/) are materialized before Vite transforms HTML/CSS,
- * served in Vite dev mode, and copied into dist/src/assets/images/ on build.
+ * Ensures image assets in public/images/ (materialized from lossless base64
+ * manifests in src/assets/images-data/) are written before Vite transforms
+ * HTML/CSS, served in Vite dev mode, and copied into dist/images/ on build.
  */
 function syncAndServeImageAssets(): Plugin {
-  const srcImagesDir = path.resolve(__dirname, 'src/assets/images');
+  const publicImagesDir = path.resolve(__dirname, 'public/images');
   const b64Dir = path.resolve(__dirname, 'src/assets/images-data');
   const mimeByExt: Record<string, string> = {
     '.avif': 'image/avif',
@@ -55,9 +55,9 @@ function syncAndServeImageAssets(): Plugin {
   function materializeFromManifests(): void {
     const groups = collectManifestGroups();
     if (groups.size === 0) return;
-    fs.mkdirSync(srcImagesDir, { recursive: true });
+    fs.mkdirSync(publicImagesDir, { recursive: true });
     for (const outName of groups.keys()) {
-      const outPath = path.join(srcImagesDir, outName);
+      const outPath = path.join(publicImagesDir, outName);
       const buf = decodeB64Image(outName);
       if (buf && (!fs.existsSync(outPath) || !fs.readFileSync(outPath).equals(buf))) {
         fs.writeFileSync(outPath, buf);
@@ -72,14 +72,14 @@ function syncAndServeImageAssets(): Plugin {
     },
     configureServer(server) {
       materializeFromManifests();
-      server.middlewares.use('/src/assets/images', (req, res, next) => {
+      server.middlewares.use('/images', (req, res, next) => {
         const cleanUrl = (req.url || '').split('?')[0].replace(/^\/+/, '');
         if (!cleanUrl || cleanUrl.includes('..')) {
           return next();
         }
         const ext = path.extname(cleanUrl).toLowerCase();
         const contentType = mimeByExt[ext] || 'application/octet-stream';
-        const diskPath = path.join(srcImagesDir, cleanUrl);
+        const diskPath = path.join(publicImagesDir, cleanUrl);
         if (fs.existsSync(diskPath) && fs.statSync(diskPath).isFile()) {
           res.setHeader('Content-Type', contentType);
           fs.createReadStream(diskPath).pipe(res);
@@ -97,13 +97,13 @@ function syncAndServeImageAssets(): Plugin {
     closeBundle(error?: Error): void {
       if (error) return;
       const distDir = path.resolve(__dirname, 'dist');
-      const distImagesDir = path.resolve(distDir, 'src/assets/images');
+      const distImagesDir = path.resolve(distDir, 'images');
       if (!fs.existsSync(distDir)) return;
       fs.mkdirSync(distImagesDir, { recursive: true });
 
-      if (fs.existsSync(srcImagesDir)) {
-        for (const entry of fs.readdirSync(srcImagesDir)) {
-          const srcFile = path.join(srcImagesDir, entry);
+      if (fs.existsSync(publicImagesDir)) {
+        for (const entry of fs.readdirSync(publicImagesDir)) {
+          const srcFile = path.join(publicImagesDir, entry);
           if (fs.statSync(srcFile).isFile()) {
             fs.copyFileSync(srcFile, path.join(distImagesDir, entry));
           }
